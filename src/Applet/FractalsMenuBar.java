@@ -1,35 +1,40 @@
 package Applet;
 
-import java.awt.*;
-import javax.swing.*;
+import javax.swing.JMenuBar;
 
 public class FractalsMenuBar extends JMenuBar
 {
-  private Fractals myFractals;
-  private FractalsMenu fractals;
-  private HelpMenu help;
+    private final Fractals myFractals;
+    private final FractalsMenu fractals;
+    private final HelpMenu help;
 
-  public FractalsMenuBar(Fractals frac)
-  {
-    myFractals = frac;
+    public FractalsMenuBar(final Fractals frac)
+    {
+        this.myFractals = frac;
 
-    // "Fractals" menu:
+        // "Fractals" menu:
 
-    fractals = new FractalsMenu(this);
-    add(fractals);
+        this.fractals = new FractalsMenu(this);
+        this.add(this.fractals);
 
-    // "Help" menu:
+        // "Help" menu:
 
-    help = new HelpMenu();
-    add(help);
-  }
+        this.help = new HelpMenu();
+        this.add(this.help);
+    }
 
-  public void newGenM()
-  { myFractals.newGenM(); }
+    public void newGenM()
+    {
+        this.myFractals.newGenM();
+    }
 
-  public void newGenJ()
-  { myFractals.newGenJ(); }
+    public void newGenJ()
+    {
+        this.myFractals.newGenJ();
+    }
 
-  public void setAnimateType(int type)
-  { myFractals.setAnimateType(type); }
+    public void setAnimateType(final int type)
+    {
+        this.myFractals.setAnimateType(type);
+    }
 }

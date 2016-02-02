@@ -1,78 +1,86 @@
 package Applet;
 
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class LineAnimation
-  implements ActionListener
+import javax.swing.Timer;
+
+public class LineAnimation implements ActionListener
 {
-  private MandelbrotPanel mPanel;
-  private Timer lineAnimate;
-  private double xBegin, yBegin, xEnd, yEnd;
-  private double xIncrease, yIncrease;
-  private int count = 0, steps = 0;;
+    private final MandelbrotPanel mPanel;
+    private final Timer lineAnimate;
+    private double xBegin, yBegin, xEnd, yEnd;
+    private double xIncrease, yIncrease;
+    private int count = 0, steps = 0;;
 
-  public LineAnimation(MandelbrotPanel mPanel)
-  {
-    this.mPanel = mPanel;
-    lineAnimate = new Timer(175, this);
-  }
-
-  public void setSpeed(int value)
-  {
-    lineAnimate.setDelay(value);
-  }
-  
-  public void startAnimate()
-  {
-    xBegin = mPanel.getWidth() / 2;
-    yBegin = mPanel.getHeight() / 2;
-    xEnd = xBegin;
-    yEnd = yBegin;
-    xIncrease = 0.0;
-    yIncrease = 0.0;
-
-    lineAnimate.start();
-  }
-
-  public void setIncrease(int xEnd, int yEnd)
-  {
-    this.xEnd = xEnd;
-    this.yEnd = yEnd;
-    
-    int xSlope = xEnd - (int)xBegin,
-        ySlope = yEnd - (int)yBegin;
-
-    count = 0;
-    steps = Math.max(Math.abs(xSlope), Math.abs(ySlope));
-
-    xIncrease = (double)xSlope / steps;
-    yIncrease = (double)ySlope / steps;
-  }
-
-  @Override
-public void actionPerformed(ActionEvent e)
-  {
-    if (count < steps)
+    public LineAnimation(final MandelbrotPanel mPanel)
     {
-      xBegin += xIncrease;
-      yBegin += yIncrease;
-      count++;
+        this.mPanel = mPanel;
+        this.lineAnimate = new Timer(175, this);
     }
 
-    mPanel.juliaGen(xBegin, yBegin);
-    mPanel.repaint();
-  }
+    public void setSpeed(final int value)
+    {
+        this.lineAnimate.setDelay(value);
+    }
 
-  public void stopAnimate()
-  { lineAnimate.stop(); }
+    public void startAnimate()
+    {
+        this.xBegin = this.mPanel.getWidth() / 2;
+        this.yBegin = this.mPanel.getHeight() / 2;
+        this.xEnd = this.xBegin;
+        this.yEnd = this.yBegin;
+        this.xIncrease = 0.0;
+        this.yIncrease = 0.0;
 
-  public double getXBegin()
-  { return xBegin; }
+        this.lineAnimate.start();
+    }
 
-  public double getYBegin()
-  { return yBegin; }
+    public void setIncrease(final int xEnd, final int yEnd)
+    {
+        this.xEnd = xEnd;
+        this.yEnd = yEnd;
 
-  public boolean isRunning()
-  { return lineAnimate.isRunning(); }
+        final double xSlope = this.xEnd - (int)this.xBegin, ySlope = this.yEnd - (int)this.yBegin;
+
+        this.count = 0;
+        this.steps = (int)(Math.max(Math.abs(xSlope), Math.abs(ySlope)) + 0.5);
+
+        this.xIncrease = xSlope / this.steps;
+        this.yIncrease = ySlope / this.steps;
+    }
+
+    @Override
+    public void actionPerformed(final ActionEvent e)
+    {
+        if (this.count < this.steps)
+        {
+            this.xBegin += this.xIncrease;
+            this.yBegin += this.yIncrease;
+            this.count++;
+        }
+
+        this.mPanel.juliaGen(this.xBegin, this.yBegin);
+        this.mPanel.repaint();
+    }
+
+    public void stopAnimate()
+    {
+        this.lineAnimate.stop();
+    }
+
+    public double getXBegin()
+    {
+        return this.xBegin;
+    }
+
+    public double getYBegin()
+    {
+        return this.yBegin;
+    }
+
+    public boolean isRunning()
+    {
+        return this.lineAnimate.isRunning();
+    }
 }

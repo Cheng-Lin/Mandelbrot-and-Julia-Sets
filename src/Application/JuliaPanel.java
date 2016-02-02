@@ -1,100 +1,121 @@
 package Application;
 
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-public class JuliaPanel extends JPanel
-  implements MouseListener
+public class JuliaPanel extends JPanel implements MouseListener
 {
-  private JuliaSet juliaSet;
-  private BufferedImage juliaImage;
-  private boolean clickZoom = true;
+    private JuliaSet juliaSet;
+    private BufferedImage juliaImage;
+    private boolean clickZoom = true;
 
-  public JuliaPanel()
-  {
-    setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-    setBackground(Color.white);
-
-    addMouseListener(this);
-  }
-
-  public void setClickZoom(boolean clickZoom)
-  { this.clickZoom = clickZoom; }
-
-  public void reset()
-  {
-    juliaSet.reset();
-
-    repaint();
-  }
-
-  public void generate(double kReal, double kImage)
-  {
-    juliaSet.setK(kReal, kImage);
-
-    repaint();
-  }
-
-  public void mousePressed(MouseEvent e){}
-
-  public void mouseReleased(MouseEvent e){}
-
-  public void mouseClicked(MouseEvent e)
-  {
-    if (clickZoom)
+    public JuliaPanel()
     {
-      if (e.getButton() == e.BUTTON1)
-      {
-        juliaSet.zoomIN(juliaSet.getX(e.getX()), juliaSet.getY(e.getY()));
-        repaint();
-      }
-      else if (e.getButton() == e.BUTTON3)
-      {
-        juliaSet.zoomOUT(juliaSet.getX(e.getX()), juliaSet.getY(e.getY()));
-        repaint();
-      }
+        this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+        this.setBackground(Color.white);
+
+        this.addMouseListener(this);
     }
-  }
 
-  public void mouseEntered(MouseEvent e){}
-
-  public void mouseExited(MouseEvent e){}
-
-  public void paint(Graphics g)
-  {
-    super.paint(g);
-
-    if (juliaSet == null)
-      juliaSet = new JuliaSet(getWidth() - 4, getHeight() - 4);
-    else
+    public void setClickZoom(final boolean clickZoom)
     {
-      if (juliaSet.getWidth() != getWidth() - 4 || 
-	  juliaSet.getHeight() != getHeight() - 4)
-        juliaSet.setImgSize(getWidth() - 4, getHeight() - 4);
+        this.clickZoom = clickZoom;
     }
-    juliaImage = juliaSet.generate();
 
-    try {
-      g.drawImage(juliaImage, 2, 2, null);
-    } catch (Exception e) {}
-  }
-
-  public void saveImage(int width, int height)
-  {
-    JFileChooser fc = new JFileChooser();
-    int returnVal = fc.showSaveDialog(null);
-    if (returnVal == JFileChooser.APPROVE_OPTION)
+    public void reset()
     {
-      try {
-        juliaSet.setImgSize(width, height);
-        BufferedImage imgJSet = juliaSet.generate();
-        ImageIO.write(imgJSet, "jpg", fc.getSelectedFile());
-      } catch(IOException e) {}
+        this.juliaSet.reset();
+
+        this.repaint();
     }
-  }
+
+    public void generate(final double kReal, final double kImage)
+    {
+        this.juliaSet.setK(kReal, kImage);
+
+        this.repaint();
+    }
+
+    @Override
+    public void mousePressed(final MouseEvent e)
+    {}
+
+    @Override
+    public void mouseReleased(final MouseEvent e)
+    {}
+
+    @Override
+    public void mouseClicked(final MouseEvent e)
+    {
+        if (this.clickZoom)
+        {
+            if (e.getButton() == MouseEvent.BUTTON1)
+            {
+                this.juliaSet.zoomIN(this.juliaSet.getX(e.getX()), this.juliaSet.getY(e.getY()));
+                this.repaint();
+            }
+            else if (e.getButton() == MouseEvent.BUTTON3)
+            {
+                this.juliaSet.zoomOUT(this.juliaSet.getX(e.getX()), this.juliaSet.getY(e.getY()));
+                this.repaint();
+            }
+        }
+    }
+
+    @Override
+    public void mouseEntered(final MouseEvent e)
+    {}
+
+    @Override
+    public void mouseExited(final MouseEvent e)
+    {}
+
+    @Override
+    public void paint(final Graphics g)
+    {
+        super.paint(g);
+
+        if (this.juliaSet == null)
+            this.juliaSet = new JuliaSet(this.getWidth() - 4, this.getHeight() - 4);
+        else
+        {
+            if (this.juliaSet.getWidth() != this.getWidth() - 4 || this.juliaSet.getHeight() != this.getHeight() - 4)
+                this.juliaSet.setImgSize(this.getWidth() - 4, this.getHeight() - 4);
+        }
+        this.juliaImage = this.juliaSet.generate();
+
+        try
+        {
+            g.drawImage(this.juliaImage, 2, 2, null);
+        }
+        catch (final Exception e)
+        {}
+    }
+
+    public void saveImage(final int width, final int height)
+    {
+        final JFileChooser fc = new JFileChooser();
+        final int returnVal = fc.showSaveDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            try
+            {
+                this.juliaSet.setImgSize(width, height);
+                final BufferedImage imgJSet = this.juliaSet.generate();
+                ImageIO.write(imgJSet, "jpg", fc.getSelectedFile());
+            }
+            catch (final IOException e)
+            {}
+        }
+    }
 }

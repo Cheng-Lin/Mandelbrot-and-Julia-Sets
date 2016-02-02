@@ -1,52 +1,56 @@
 package Applet;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import javax.swing.*;
 
-public class FreeAnimation
-  implements ActionListener
+import javax.swing.Timer;
+
+public class FreeAnimation implements ActionListener
 {
-  private JuliaPanel jPanel;
-  private Timer freeAnimate;
-  private ArrayList<Point2D.Double> points;
-  private int count = -1;
+    private final JuliaPanel jPanel;
+    private final Timer freeAnimate;
+    private ArrayList<Point2D.Double> points;
+    private int count = -1;
 
-  public FreeAnimation(JuliaPanel jPanel)
-  {
-    this.jPanel = jPanel;
-    freeAnimate = new Timer(175, this);
-  }
+    public FreeAnimation(final JuliaPanel jPanel)
+    {
+        this.jPanel = jPanel;
+        this.freeAnimate = new Timer(175, this);
+    }
 
-  public void setSpeed(int value)
-  {
-    freeAnimate.setDelay(value);
-  }
-  
-  public void startAnimate(ArrayList<Point2D.Double> points)
-  {
-    this.points = points;
-    freeAnimate.start();
-  }
+    public void setSpeed(final int value)
+    {
+        this.freeAnimate.setDelay(value);
+    }
 
-  @Override
-public void actionPerformed(ActionEvent e)
-  {
-    if (count < points.size() - 2)
-      count++;
-    else
-      count = 0;
+    public void startAnimate(final ArrayList<Point2D.Double> points)
+    {
+        this.points = points;
+        this.freeAnimate.start();
+    }
 
-    try {
-      jPanel.generate(points.get(count).getX(), points.get(count).getY());
-    } catch (IndexOutOfBoundsException ex) {}
-  }
+    @Override
+    public void actionPerformed(final ActionEvent e)
+    {
+        if (this.count < this.points.size() - 2)
+            this.count++;
+        else
+            this.count = 0;
 
-  public void stopAnimate()
-  {
-    count = -1;
-    points = null;
-    freeAnimate.stop();
-  }
+        try
+        {
+            this.jPanel.generate(this.points.get(this.count).getX(), this.points.get(this.count).getY());
+        }
+        catch (final IndexOutOfBoundsException ex)
+        {}
+    }
+
+    public void stopAnimate()
+    {
+        this.count = -1;
+        this.points = null;
+        this.freeAnimate.stop();
+    }
 }

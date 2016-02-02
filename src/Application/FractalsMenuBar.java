@@ -1,49 +1,61 @@
 package Application;
-import java.awt.*;
-import javax.swing.*;
+
+import javax.swing.JMenuBar;
 
 public class FractalsMenuBar extends JMenuBar
 {
-  private Fractals myFractals;
-  private FileMenu file;
-  private FractalsMenu fractals;
-  private HelpMenu help;
+    private final Fractals myFractals;
+    private final FileMenu file;
+    private final FractalsMenu fractals;
+    private final HelpMenu help;
 
-  public FractalsMenuBar(Fractals frac)
-  {
-    myFractals = frac;
+    public FractalsMenuBar(final Fractals frac)
+    {
+        this.myFractals = frac;
 
-    // "File" menu:
+        // "File" menu:
 
-    file = new FileMenu(this);    
-    add(file);
+        this.file = new FileMenu(this);
+        this.add(this.file);
 
-    // "Fractals" menu:
+        // "Fractals" menu:
 
-    fractals = new FractalsMenu(this);
-    add(fractals);
+        this.fractals = new FractalsMenu(this);
+        this.add(this.fractals);
 
-    // "Help" menu:
+        // "Help" menu:
 
-    help = new HelpMenu();
-    add(help);
-  }
+        this.help = new HelpMenu();
+        this.add(this.help);
+    }
 
-  public void saveM(int width, int height)
-  { myFractals.saveM(width, height); }
+    public void saveM(final int width, final int height)
+    {
+        this.myFractals.saveM(width, height);
+    }
 
-  public void saveJ(int width, int height)
-  { myFractals.saveJ(width, height); }
+    public void saveJ(final int width, final int height)
+    {
+        this.myFractals.saveJ(width, height);
+    }
 
-  public void newGenM()
-  { myFractals.newGenM(); }
+    public void newGenM()
+    {
+        this.myFractals.newGenM();
+    }
 
-  public void newGenJ()
-  { myFractals.newGenJ(); }
+    public void newGenJ()
+    {
+        this.myFractals.newGenJ();
+    }
 
-  public void setAnimateType(int type)
-  { myFractals.setAnimateType(type); }
+    public void setAnimateType(final int type)
+    {
+        this.myFractals.setAnimateType(type);
+    }
 
-  public void closeApplication()
-  { myFractals.dispose(); }
+    public void closeApplication()
+    {
+        this.myFractals.dispose();
+    }
 }

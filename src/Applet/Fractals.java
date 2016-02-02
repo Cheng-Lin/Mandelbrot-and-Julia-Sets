@@ -1,67 +1,80 @@
 package Applet;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.GridLayout;
+
+import javax.swing.JApplet;
+import javax.swing.JPanel;
 
 public class Fractals extends JApplet
 {
-	private FractalsMenuBar menuBar;
-	private MandelbrotPanel mandelbrotSet;
-	private JuliaPanel juliaSet;
-	private JPanel juliaSets;
-	private ControlPanel control;
+    private FractalsMenuBar menuBar;
+    private MandelbrotPanel mandelbrotSet;
+    private JuliaPanel juliaSet;
+    private ControlPanel control;
 
-	@Override
-	public void init()
-	{
-		//Menubar
-		menuBar = new FractalsMenuBar(this);
-		setJMenuBar(menuBar);
+    @Override
+    public void init()
+    {
+        // Menubar
+        this.menuBar = new FractalsMenuBar(this);
+        this.setJMenuBar(this.menuBar);
 
-		//Main Panel
-		JPanel imagePanel = new JPanel();
-		imagePanel.setLayout(new GridLayout(1, 2));
+        // Main Panel
+        final JPanel imagePanel = new JPanel();
+        imagePanel.setLayout(new GridLayout(1, 2));
 
-		//Julia Set Panel
-		juliaSet = new JuliaPanel();
+        // Julia Set Panel
+        this.juliaSet = new JuliaPanel();
 
-		//Mandelbrot Set Panel
-		mandelbrotSet = new MandelbrotPanel(juliaSet);
+        // Mandelbrot Set Panel
+        this.mandelbrotSet = new MandelbrotPanel(this.juliaSet);
 
-		//add to main panel
-		imagePanel.add(mandelbrotSet);
-		imagePanel.add(juliaSet);
+        // add to main panel
+        imagePanel.add(this.mandelbrotSet);
+        imagePanel.add(this.juliaSet);
 
-		//Control Panel
-		control = new ControlPanel(this);
+        // Control Panel
+        this.control = new ControlPanel(this);
 
-		Container c = getContentPane();
-		c.add(imagePanel, BorderLayout.CENTER);
-		c.add(control,BorderLayout.SOUTH);
-	}
+        final Container c = this.getContentPane();
+        c.add(imagePanel, BorderLayout.CENTER);
+        c.add(this.control, BorderLayout.SOUTH);
+    }
 
-	public void newGenM()
-	{
-		mandelbrotSet.reset();
-	}
+    public void newGenM()
+    {
+        this.mandelbrotSet.reset();
+    }
 
-	public void newGenJ()
-	{
-		juliaSet.reset();
-	}
+    public void newGenJ()
+    {
+        this.juliaSet.reset();
+    }
 
-	public void setClickZoom(boolean clickZoom)
-	{ mandelbrotSet.setClickZoom(clickZoom); }
+    public void setClickZoom(final boolean clickZoom)
+    {
+        this.mandelbrotSet.setClickZoom(clickZoom);
+    }
 
-	public void setClickGen(boolean clickGen)
-	{ mandelbrotSet.setClickGen(clickGen); }
+    public void setClickGen(final boolean clickGen)
+    {
+        this.mandelbrotSet.setClickGen(clickGen);
+    }
 
-	public void setAnimation(boolean animation)
-	{ mandelbrotSet.setAnimation(animation); }
+    public void setAnimation(final boolean animation)
+    {
+        this.mandelbrotSet.setAnimation(animation);
+    }
 
-	public void setAnimateSpeed(int value)
-	{ mandelbrotSet.setAnimateSpeed(value); }
+    public void setAnimateSpeed(final int value)
+    {
+        this.mandelbrotSet.setAnimateSpeed(value);
+    }
 
-	public void setAnimateType(int type)
-	{ mandelbrotSet.setAnimateType(type); }
+    public void setAnimateType(final int type)
+    {
+        this.mandelbrotSet.setAnimateType(type);
+    }
 }

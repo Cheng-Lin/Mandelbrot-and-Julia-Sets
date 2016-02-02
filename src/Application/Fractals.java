@@ -1,82 +1,99 @@
 package Application;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Fractals extends JFrame
 {
-	private FractalsMenuBar menuBar;
-	private MandelbrotPanel mandelbrotSet;
-	private JuliaPanel juliaSet;
-	private JPanel juliaSets;
-	private ControlPanel control;
+    private final FractalsMenuBar menuBar;
+    private final MandelbrotPanel mandelbrotSet;
+    private final JuliaPanel juliaSet;
+    private final ControlPanel control;
 
-	public Fractals()
-	{
-		super("Mandelbrot & Julia Sets");
-		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public Fractals()
+    {
+        super("Mandelbrot & Julia Sets");
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//Menubar
-		menuBar = new FractalsMenuBar(this);
-		setJMenuBar(menuBar);
+        // Menubar
+        this.menuBar = new FractalsMenuBar(this);
+        this.setJMenuBar(this.menuBar);
 
-		//Main Panel
-		JPanel imagePanel = new JPanel();
-		imagePanel.setLayout(new GridLayout(1, 2));
+        // Main Panel
+        final JPanel imagePanel = new JPanel();
+        imagePanel.setLayout(new GridLayout(1, 2));
 
-		//Julia Set Panel
-		juliaSet = new JuliaPanel();
+        // Julia Set Panel
+        this.juliaSet = new JuliaPanel();
 
-		//Mandelbrot Set Panel
-		mandelbrotSet = new MandelbrotPanel(juliaSet);
+        // Mandelbrot Set Panel
+        this.mandelbrotSet = new MandelbrotPanel(this.juliaSet);
 
-		//add to main panel
-		imagePanel.add(mandelbrotSet);
-		imagePanel.add(juliaSet);
+        // add to main panel
+        imagePanel.add(this.mandelbrotSet);
+        imagePanel.add(this.juliaSet);
 
-		//Control Panel
-		control = new ControlPanel(this);
+        // Control Panel
+        this.control = new ControlPanel(this);
 
-		Container c = getContentPane();
-		c.add(imagePanel, BorderLayout.CENTER);
-		c.add(control,BorderLayout.SOUTH);
-	}
+        final Container c = this.getContentPane();
+        c.add(imagePanel, BorderLayout.CENTER);
+        c.add(this.control, BorderLayout.SOUTH);
+    }
 
-	public void newGenM()
-	{
-		mandelbrotSet.reset();
-	}
+    public void newGenM()
+    {
+        this.mandelbrotSet.reset();
+    }
 
-	public void newGenJ()
-	{
-		juliaSet.reset();
-	}
+    public void newGenJ()
+    {
+        this.juliaSet.reset();
+    }
 
-	public void saveM(int width, int height)
-	{ mandelbrotSet.saveImage(width, height); }
+    public void saveM(final int width, final int height)
+    {
+        this.mandelbrotSet.saveImage(width, height);
+    }
 
-	public void saveJ(int width, int height)
-	{ juliaSet.saveImage(width, height); }
+    public void saveJ(final int width, final int height)
+    {
+        this.juliaSet.saveImage(width, height);
+    }
 
-	public void setClickZoom(boolean clickZoom)
-	{ mandelbrotSet.setClickZoom(clickZoom); }
+    public void setClickZoom(final boolean clickZoom)
+    {
+        this.mandelbrotSet.setClickZoom(clickZoom);
+    }
 
-	public void setClickGen(boolean clickGen)
-	{ mandelbrotSet.setClickGen(clickGen); }
+    public void setClickGen(final boolean clickGen)
+    {
+        this.mandelbrotSet.setClickGen(clickGen);
+    }
 
-	public void setAnimation(boolean animation)
-	{ mandelbrotSet.setAnimation(animation); }
+    public void setAnimation(final boolean animation)
+    {
+        this.mandelbrotSet.setAnimation(animation);
+    }
 
-	public void setAnimateSpeed(int value)
-	{ mandelbrotSet.setAnimateSpeed(value); }
+    public void setAnimateSpeed(final int value)
+    {
+        this.mandelbrotSet.setAnimateSpeed(value);
+    }
 
-	public void setAnimateType(int type)
-	{ mandelbrotSet.setAnimateType(type); }
+    public void setAnimateType(final int type)
+    {
+        this.mandelbrotSet.setAnimateType(type);
+    }
 
-	public static void main(String[] args)
-	{
-		Fractals windows = new Fractals();
-		windows.setSize(608, 387);
-		windows.show();
-	}
+    public static void main(final String[] args)
+    {
+        final Fractals windows = new Fractals();
+        windows.setSize(608, 387);
+        windows.setVisible(true);
+    }
 }
